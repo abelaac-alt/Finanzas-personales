@@ -99,13 +99,11 @@
         /* --- ESTILO AYUDA --- */
         .help-header { text-align: center; margin-bottom: 30px; }
         .help-header h2 { color: var(--blue-dark); text-transform: uppercase; font-size: 1.4rem; margin-bottom: 0px; }
-
         .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; margin-top: 20px; }
         .step-item { background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #e2e8f0; }
         .step-num { color: var(--orange-corp); font-weight: 900; font-size: 1.2rem; margin-bottom: 5px; display: block; }
         .step-item h4 { color: var(--blue-dark); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 5px; }
         .step-item p { font-size: 0.8rem; color: #475569; line-height: 1.4; }
-
         .faq-box { border-top: 1px solid #e2e8f0; padding-top: 25px; }
         .faq-card { margin-bottom: 20px; }
         .faq-card h4 { color: var(--blue-corp); font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
@@ -125,15 +123,22 @@
         .category-content.collapsed { grid-template-rows: 0fr; }
         .category-inner { overflow: hidden; padding: 0 20px; }
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; padding: 20px 0; }
+        
         .item-card { background: #fff; border: 1px solid var(--border); padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
         .item-img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .item-card h3 { font-size: 0.95rem; color: var(--blue-dark); margin-bottom: 2px; }
+        .item-sub { font-size: 0.75rem; color: var(--blue-corp); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .item-pack { font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 15px; }
+
         .qty-box { display: flex; align-items: center; border: 1px solid var(--blue-corp); border-radius: 5px; margin-bottom: 10px; }
         .qty-btn { background: #f8fafc; border: none; width: 40px; height: 38px; cursor: pointer; font-weight: bold; }
         .qty-val { flex-grow: 1; text-align: center; font-weight: bold; }
         .btn-add { background: var(--blue-dark); color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
+        
         .sidebar { background: var(--white); border: 1px solid var(--border); border-top: 5px solid var(--orange-corp); padding: 25px; border-radius: 8px; position: sticky; top: 20px; }
         .input-form { width: 100%; padding: 12px; margin-top: 10px; border: 1px solid var(--border); border-radius: 5px; }
         .btn-submit { width: 100%; background: var(--orange-corp); color: var(--blue-dark); border: none; padding: 16px; margin-top: 20px; font-weight: 800; text-transform: uppercase; border-radius: 5px; cursor: pointer; }
+        
         footer { background-color: var(--white); padding: 40px 20px; text-align: center; border-top: 1px solid var(--border); margin-top: 20px; }
         .web-button { display: inline-block; background: var(--blue-dark); color: var(--white); text-decoration: none; padding: 15px 30px; border-radius: 50px; font-weight: bold; margin-bottom: 30px; }
         .iso-img { max-width: 180px; width: 100%; margin: 0 auto; display: block; }
@@ -150,38 +155,17 @@
 <div class="modal-overlay" id="helpModal" onclick="toggleModal('helpModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
         <span class="modal-close" onclick="toggleModal('helpModal')">✕</span>
-        
-        <div class="help-header">
-            <h2>Ayuda y preguntas frecuentes</h2>
-        </div>
-        
+        <div class="help-header"><h2>Ayuda y preguntas frecuentes</h2></div>
         <div class="step-grid">
-            <div class="step-item">
-                <span class="step-num">01</span>
-                <h4>Configuración</h4>
-                <p>Navegue por las categorías y ajuste las cantidades según sus necesidades.</p>
-            </div>
-            <div class="step-item">
-                <span class="step-num">02</span>
-                <h4>Validación</h4>
-                <p>Revise su selección en el panel derecho y aporte sus datos de contacto.</p>
-            </div>
-            <div class="step-item">
-                <span class="step-num">03</span>
-                <h4>Tramitación</h4>
-                <p>Al confirmar, se generará una orden formal lista para ser enviada por email.</p>
-            </div>
-            <div class="step-item">
-                <span class="step-num">04</span>
-                <h4>Seguimiento</h4>
-                <p>Utilice el código de pedido para cualquier consulta rápida vía WhatsApp.</p>
-            </div>
+            <div class="step-item"><span class="step-num">01</span><h4>Configuración</h4><p>Navegue por las categorías y ajuste las cantidades según sus necesidades.</p></div>
+            <div class="step-item"><span class="step-num">02</span><h4>Validación</h4><p>Revise su selección en el panel derecho y aporte sus datos de contacto.</p></div>
+            <div class="step-item"><span class="step-num">03</span><h4>Tramitación</h4><p>Al confirmar, se generará una orden formal lista para ser enviada por email.</p></div>
+            <div class="step-item"><span class="step-num">04</span><h4>Seguimiento</h4><p>Utilice el código de pedido para cualquier consulta rápida vía WhatsApp.</p></div>
         </div>
-
         <div class="faq-box">
             <div class="faq-card">
                 <h4>¿Cuál es el tiempo estimado de entrega?</h4>
-                <p>En <strong>Grupo MDS</strong> priorizamos su urgencia. Los envíos nacionales mediante GLS o REDUR se entregan habitualmente en un margen de <strong>24 a 72 horas laborables</strong>. Si su pedido incluye personalización (tira publicitaria), el plazo de entrega es aproximadamente de <strong>10 días laborables</strong>.</p>
+                <p>En <strong>Grupo MDS</strong> priorizamos su urgencia. Los envíos nacionales mediante GLS o REDUR se entregan habitualmente en un margen de <strong>24 a 72 horas laborables</strong>. Si su pedido incluye personalización (tira publicitaria), el plazo de entrega es aproximadamente de 10 días laborables.</p>
             </div>
             <div class="faq-card">
                 <h4>¿Precisa atención personalizada?</h4>
@@ -196,17 +180,10 @@
         <div style="font-size: 4rem; color: var(--success); margin-bottom: 10px;">✓</div>
         <h2 style="border:none; margin-bottom:5px; color: var(--blue-dark);">Solicitud Procesada</h2>
         <p style="color: #64748b; font-size: 0.9rem;">Gracias por confiar en el servicio oficial del Grupo MDS.</p>
-        
         <div class="order-id-badge" id="confirmCode">-----</div>
-        
         <div id="confirmSummary" style="text-align: left; background: #f8fafc; padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #e2e8f0; font-size: 0.85rem;"></div>
-
         <p style="font-size: 0.9rem; color: var(--blue-dark); margin-bottom: 20px;"><strong>¿Necesita agilizar el envío?</strong><br>Pulse el botón inferior para informar a nuestro equipo comercial.</p>
-        
-        <a href="#" id="waConfirmBtn" target="_blank" class="btn-modal-wa">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" width="22"> Notificar por WhatsApp
-        </a>
-        
+        <a href="#" id="waConfirmBtn" target="_blank" class="btn-modal-wa"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" width="22"> Notificar por WhatsApp</a>
         <button style="background: none; border: none; color: #94a3b8; cursor: pointer; margin-top: 20px; font-size: 0.85rem; text-decoration: underline;" onclick="window.location.reload()">Cerrar y volver al inicio</button>
     </div>
 </div>
@@ -240,35 +217,42 @@
     if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
 
     const productos = [
-        { id: 1, cat: 'bases', nombre: "Base PMMA Estándar 520x110", pack: 50 },
+        // --- BASES PMMA ---
+        { id: 1, cat: 'bases', nombre: "Base PMMA Estándar 520x110", sub: "SOLO BASE", pack: 50, img: "https://metatrafic.com/27632-large_default/placa-de-matricula-acrilica-ordinaria-520x110.jpg" },
         { id: 2, cat: 'bases', nombre: "Base PMMA Estándar c/ tira publicitaria 520x110", pack: 50 },
-        { id: 3, cat: 'bases', nombre: "Base PMMA Alfa 340x110", pack: 25 },
-        { id: 4, cat: 'bases', nombre: "Base PMMA Motocicleta 220x110", pack: 25 },
+        { id: 3, cat: 'bases', nombre: "Base PMMA Alfa 340x110", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27638-large_default/placa-pmma-matricula-acrilica-corta-alfa-340x110.jpg" },
+        { id: 4, cat: 'bases', nombre: "Base PMMA Motocicleta 220x110", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27634-large_default/placa-pmma-matricula-acrilica-moto-220x160.jpg" },
         { id: 5, cat: 'bases', nombre: "Base PMMA Motocicleta c/ tira publicitaria 220x110", pack: 25 },
-        { id: 6, cat: 'bases', nombre: "Base PMMA Moto Enduro 132x96", pack: 25 },
+        { id: 6, cat: 'bases', nombre: "Base PMMA Moto Enduro 132x96", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27635-large_default/placa-pmma-matricula-acrilica-trial-132x96-en-duro.jpg" },
         { id: 7, cat: 'bases', nombre: "Base PMMA Ciclomotor 100x168", pack: 25 },
         { id: 8, cat: 'bases', nombre: "Base PMMA Ciclomotor Cuadrada 140x120", pack: 25 },
-        { id: 9, cat: 'bases', nombre: "Base PMMA Cuatriciclo Ligero 210x85", pack: 25 },
+        { id: 9, cat: 'bases', nombre: "Base PMMA Cuatriciclo ligero 210x85", sub: "SOLO BASE", pack: 25, img: "https://metatrafic.com/27654-large_default/placa-pmma-matricula-acrilica-cuatriciclos-ligeros-210x85.jpg" },
         { id: 10, cat: 'bases', nombre: "Base PMMA Vehículo Especial Cuadrada 280x200", pack: 25 },
         { id: 11, cat: 'bases', nombre: "Base PMMA Vehículo Especial 340x110", pack: 25 },
-        { id: 12, cat: 'reflex', nombre: "Bobina Reflexivo Estándar 520x110", pack: 50 },
-        { id: 13, cat: 'reflex', nombre: "Bobina Reflexivo Cuatriciclo Ligero 520x110", pack: 50 },
-        { id: 14, cat: 'reflex', nombre: "Bobina Reflexivo Remolque 520x110", pack: 50 },
-        { id: 15, cat: 'reflex', nombre: "Bobina Reflexivo Taxi/VTC 520x110", pack: 50 },
+
+        // --- MATERIAL REFLEXIVO ---
+        { id: 12, cat: 'reflex', nombre: "Bobina Reflexivo Estándar 520x110", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27632-large_default/placa-de-matricula-acrilica-ordinaria-520x110.jpg" },
+        { id: 13, cat: 'reflex', nombre: "Bobina Reflexivo Cuatriciclo ligero 520x110", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27651-large_default/placa-pmma-matricula-acrilica-cuatriciclos-ligeros-520x110.jpg" },
+        { id: 14, cat: 'reflex', nombre: "Bobina Reflexivo Remolque 520x110", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27657-large_default/placa-pmma-matricula-acrilica-remolque-roja-520x110.jpg" },
+        { id: 15, cat: 'reflex', nombre: "Bobina Reflexivo Taxi/VTC 520x110", sub: "SOLO REFLEXIVO", pack: 50, img: "https://metatrafic.com/27655-large_default/placa-pmma-matricula-acrilica-taxi-vtc-520x110.jpg" },
         { id: 16, cat: 'reflex', nombre: "Bobina Reflexivo Temporal Empresa 520x110", pack: 50 },
         { id: 17, cat: 'reflex', nombre: "Bobina Reflexivo Temporal Particular 520x110", pack: 50 },
-        { id: 18, cat: 'reflex', nombre: "Reflexivo Motocicleta 220x110", pack: 25 },
-        { id: 19, cat: 'reflex', nombre: "Reflexivo Moto Enduro 132x96", pack: 25 },
+        { id: 18, cat: 'reflex', nombre: "Reflexivo Motocicleta 220x110", sub: "SOLO REFLEXIVO", pack: 25, img: "https://metatrafic.com/27634-large_default/placa-pmma-matricula-acrilica-moto-220x160.jpg" },
+        { id: 19, cat: 'reflex', nombre: "Reflexivo Moto Enduro 132x96", sub: "SOLO REFLEXIVO", pack: 25, img: "https://metatrafic.com/27635-large_default/placa-pmma-matricula-acrilica-trial-132x96-en-duro.jpg" },
         { id: 20, cat: 'reflex', nombre: "Reflexivo Ciclomotor 100x168", pack: 25 },
         { id: 21, cat: 'reflex', nombre: "Reflexivo Ciclomotor Cuadrada 140x120", pack: 25 },
-        { id: 22, cat: 'reflex', nombre: "Reflexivo Cuatriciclo Ligero 210x85", pack: 25 },
+        { id: 22, cat: 'reflex', nombre: "Reflexivo Cuatriciclo ligero 210x85", sub: "SOLO REFLEXIVO", pack: 25, img: "https://metatrafic.com/27654-large_default/placa-pmma-matricula-acrilica-cuatriciclos-ligeros-210x85.jpg" },
         { id: 23, cat: 'reflex', nombre: "Reflexivo Vehículo Especial Cuadrada 280x200", pack: 25 },
         { id: 24, cat: 'reflex', nombre: "Reflexivo Vehículo Especial 340x110", pack: 25 },
+
+        // --- PLACAS TERMINADAS ---
         { id: 25, cat: 'terminadas', nombre: "Matrícula PMMA Taxi/VTC 520x110", pack: 1, img: "https://metatrafic.com/27655-large_default/placa-pmma-matricula-acrilica-taxi-vtc-520x110.jpg" },
         { id: 26, cat: 'terminadas', nombre: "Matrícula PMMA Especial Cuadrada 280x200", pack: 1, img: "https://metatrafic.com/27658-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-280x200.jpg" },
         { id: 27, cat: 'terminadas', nombre: "Matrícula PMMA Especial 340x110", pack: 1, img: "https://metatrafic.com/27659-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-larga-340x110.jpg" },
         { id: 28, cat: 'terminadas', nombre: "Matrícula PMMA Temporal Empresa 520x110", pack: 1 },
         { id: 29, cat: 'terminadas', nombre: "Matrícula PMMA Temporal Particular 520x110", pack: 1 },
+
+        // --- SEÑALIZACIÓN ---
         { id: 30, cat: 'senalizacion', nombre: "Baliza V16 SOS FLASH", pack: 32, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/Sosflash_3_MDS.webp", link: "https://www.matriculadosdelsur.com/baliza-v16-sosflah/" },
         { id: 31, cat: 'senalizacion', nombre: "Baliza V16 Metaflash", pack: 50, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/baliza-v16_metaflash.webp", link: "https://www.matriculadosdelsur.com/baliza-v16-metaflash/" }
     ];
@@ -279,7 +263,23 @@
     function toggleModal(id) { const m = document.getElementById(id); m.style.display = (m.style.display === 'flex') ? 'none' : 'flex'; }
 
     function render() {
-        const grid = (cat) => productos.filter(p => p.cat === cat).map(p => `<div class="item-card"><div>${p.img ? `<img src="${p.img}" class="item-img">`:''}<h3>${p.nombre}</h3><p class="item-pack">${p.pack==1?'Unidades':'Mínimo: '+p.pack}</p></div><div><div class="qty-box"><button class="qty-btn" onclick="altQty(${p.id},-1)">-</button><span class="qty-val" id="q-${p.id}">${p.pack}</span><button class="qty-btn" onclick="altQty(${p.id},1)">+</button></div><button class="btn-add" onclick="add(${p.id})">Añadir al carrito</button></div></div>`).join('');
+        const grid = (cat) => productos.filter(p => p.cat === cat).map(p => `
+            <div class="item-card">
+                <div>
+                    ${p.img ? `<img src="${p.img}" class="item-img">`:''}
+                    <h3>${p.nombre}</h3>
+                    ${p.sub ? `<div class="item-sub">${p.sub}</div>` : ''}
+                    <p class="item-pack">${p.pack==1?'Unidades':'Mínimo: '+p.pack}</p>
+                </div>
+                <div>
+                    <div class="qty-box">
+                        <button class="qty-btn" onclick="altQty(${p.id},-1)">-</button>
+                        <span class="qty-val" id="q-${p.id}">${p.pack}</span>
+                        <button class="qty-btn" onclick="altQty(${p.id},1)">+</button>
+                    </div>
+                    <button class="btn-add" onclick="add(${p.id})">Añadir al carrito</button>
+                </div>
+            </div>`).join('');
         document.getElementById('grid-bases').innerHTML = grid('bases');
         document.getElementById('grid-reflex').innerHTML = grid('reflex');
         document.getElementById('grid-terminadas').innerHTML = grid('terminadas');
@@ -287,23 +287,19 @@
     }
 
     function altQty(id, dir) { const el = document.getElementById(`q-${id}`); const p = productos.find(x => x.id === id); let val = parseInt(el.innerText) + (dir * p.pack); el.innerText = val < p.pack ? p.pack : val; }
-
     function add(id) { const p = productos.find(x => x.id === id); const qty = parseInt(document.getElementById(`q-${id}`).innerText); const ex = carrito.find(x => x.id === id); if (ex) ex.qty += qty; else carrito.push({...p, qty}); renderCart(); }
-
     function renderCart() { const div = document.getElementById('cart-items'); if (!carrito.length) { div.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px; font-style: italic;">Su carrito está vacío</p>'; return; } div.innerHTML = carrito.map((i, idx) => `<div class="cart-row"><span><strong>${i.qty}</strong> x ${i.nombre}</span><button onclick="carrito.splice(${idx},1);renderCart();" style="border:none;background:none;cursor:pointer;color:#cbd5e1;">✕</button></div>`).join(''); }
 
     function enviarPedido() {
         const nom = document.getElementById('nombre').value.trim();
         const tel = document.getElementById('telefono').value.trim();
         if (!carrito.length || !nom || !tel) return alert("Por favor, rellene los campos obligatorios (*) antes de continuar.");
-        
         const id = Math.random().toString(36).substring(2, 7).toUpperCase();
         let cuerpo = `Cliente: ${nom}\nTeléfono: ${tel}\n\nBuenas tardes, quiero realizar el siguiente pedido:\n\n`;
         let resumenHtml = '<ul style="list-style:none; padding:0;">';
         carrito.forEach(i => { cuerpo += `- ${i.qty} unidades de ${i.nombre}\n`; resumenHtml += `<li style="margin-bottom:8px; border-bottom:1px solid #f1f5f9; padding-bottom:5px;"><strong>${i.qty}</strong> x ${i.nombre}</li>`; });
         resumenHtml += '</ul>';
         cuerpo += `\nObservaciones del cliente: ${document.getElementById('notas').value}\n\nMuchas gracias,\nUn cordial saludo.`;
-
         document.getElementById('confirmCode').innerText = `ORDEN Nº: ${id}`;
         document.getElementById('confirmSummary').innerHTML = resumenHtml;
         document.getElementById('waConfirmBtn').href = `https://wa.me/34674352726?text=${encodeURIComponent('Hola, contacto para agilizar la gestión de mi PEDIDO ' + id + '.')}`;
