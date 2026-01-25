@@ -228,42 +228,39 @@
             cursor: pointer;
         }
 
-        /* --- WA FLOAT - Ahora siempre visible y con más opciones --- */
+        /* --- BOTÓN WHATSAPP CORPORATIVO --- */
         .wa-float { 
             position: fixed; 
             bottom: 20px; 
             right: 20px; 
-            width: 60px; /* Tamaño un poco más grande para el icono */
+            width: 60px;
             height: 60px; 
             z-index: 1000;
-            background-color: #25D366; /* Color de fondo de WhatsApp */
+            background-color: #25D366;
             border-radius: 50%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             display: flex;
             justify-content: center;
             align-items: center;
             transition: transform 0.2s;
         }
         .wa-float:hover { transform: scale(1.1); }
-        .wa-float img { width: 60%; height: 60%; } /* Ajustar tamaño de la imagen dentro del botón */
+        .wa-float img { width: 60%; height: 60%; }
 
-        /* --- Publicidad Sidebar --- */
+        /* --- ESPACIO PUBLICITARIO (CATÁLOGO) --- */
         .ad-box {
-            background: var(--bg-page);
-            border: 1px dashed var(--border);
-            border-radius: 4px;
-            padding: 20px;
             margin-top: 30px;
             text-align: center;
-            color: #64748b;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            overflow: hidden;
+            border-radius: 4px;
+            transition: opacity 0.3s;
         }
-        .ad-box h3 {
-            color: var(--blue-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+        .ad-box:hover { opacity: 0.9; }
+        .ad-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid var(--border);
         }
     </style>
 </head>
@@ -320,9 +317,10 @@
         <button class="btn-submit" onclick="enviarPedido()">Confirmar Pedido</button>
 
         <div class="ad-box">
-            <h3>Novedades Grupo MDS</h3>
-            <p>Descubre nuestra última línea de productos premium. ¡Calidad garantizada!</p>
-            </div>
+            <a href="https://www.matriculadosdelsur.com/wp-content/uploads/2025/10/CATALOG-MDS-2025-FINAL.pdf" target="_blank" title="Ver catálogo completo">
+                <img src="https://www.matriculadosdelsur.com/wp-content/uploads/2025/10/catalogo_pc_mds-1024x229.webp" alt="Catálogo Grupo MDS">
+            </a>
+        </div>
         
     </aside>
 </div>
@@ -369,7 +367,7 @@
         { id: 29, cat: 'terminadas', nombre: "Matrícula PMMA Temporal Particular 520x110", pack: 1 },
 
         { id: 30, cat: 'senalizacion', nombre: "Baliza V16 SOS FLASH", pack: 32, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/Sosflash_3_MDS.webp", link: "https://www.matriculadosdelsur.com/baliza-v16-sosflah/" },
-        { id: 31, cat: 'senalizacion', nombre: "Baliza V16 Metaflash", pack: 50, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/baliza-v16-metaflash.webp", link: "https://www.matriculadosdelsur.com/baliza-v16-metaflash/" }
+        { id: 31, cat: 'senalizacion', nombre: "Baliza V16 Metaflash", pack: 50, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/baliza-v16_metaflash.webp", link: "https://www.matriculadosdelsur.com/baliza-v16-metaflash/" }
     ];
 
     let carrito = [];
