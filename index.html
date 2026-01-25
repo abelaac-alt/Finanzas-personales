@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <meta name="theme-color" content="#fdb933">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Grupo MDS">
     <link rel="apple-touch-icon" href="icon-192.png">
     
     <title>Pedidos | Grupo MDS</title>
@@ -32,7 +33,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- HEADER --- */
         header {
             background-color: var(--white);
             padding: 25px 0;
@@ -49,9 +49,6 @@
             font-weight: 800;
         }
 
-        header h1 span { color: var(--blue-corp); }
-
-        /* --- CONTENEDOR PRINCIPAL --- */
         .container {
             max-width: 1200px;
             margin: 30px auto;
@@ -65,7 +62,6 @@
             .container { grid-template-columns: 1.8fr 1.2fr; }
         }
 
-        /* --- CATEGORÍAS ACORDEÓN --- */
         .category-card {
             background: var(--white);
             border: 1px solid var(--border);
@@ -86,14 +82,9 @@
             align-items: center;
             user-select: none;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background-color 0.2s;
         }
 
-        .category-header:hover { background-color: #eeb907; }
-
         .cat-arrow { transition: transform 0.3s ease; }
-        .category-content:not(.collapsed) ~ .category-header .cat-arrow { transform: rotate(180deg); }
 
         .category-content {
             display: grid;
@@ -115,7 +106,6 @@
             font-weight: bold;
         }
 
-        /* --- PRODUCTOS --- */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -131,23 +121,20 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: border-color 0.2s;
         }
-
-        .item-card:hover { border-color: var(--blue-corp); }
 
         .item-img {
             width: 100%;
-            height: 180px;
+            height: 160px;
             object-fit: contain;
             margin-bottom: 15px;
             background-color: #fff;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
+            padding-bottom: 10px;
         }
 
-        .item-card h3 { font-size: 1rem; color: var(--blue-dark); margin-bottom: 8px; line-height: 1.3; }
-        .item-pack { font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 20px; }
+        .item-card h3 { font-size: 0.95rem; color: var(--blue-dark); margin-bottom: 8px; line-height: 1.3; }
+        .item-pack { font-size: 0.8rem; font-weight: bold; color: #64748b; margin-bottom: 15px; }
 
         .qty-box {
             display: flex;
@@ -155,97 +142,77 @@
             border: 1px solid var(--blue-corp);
             border-radius: 3px;
             overflow: hidden;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .qty-btn {
             background: #f8fafc;
             border: none;
-            width: 45px;
-            height: 40px;
+            width: 40px;
+            height: 38px;
             cursor: pointer;
             font-weight: bold;
             color: var(--blue-dark);
-            font-size: 1.2rem;
         }
 
-        .qty-btn:hover { background: #e2e8f0; }
-        .qty-val { flex-grow: 1; text-align: center; font-weight: bold; font-size: 1.1rem; }
-
-        .action-btns { display: flex; flex-direction: column; gap: 8px; }
+        .qty-val { flex-grow: 1; text-align: center; font-weight: bold; }
 
         .btn-add {
             background: var(--blue-dark);
             color: white;
             border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 3px;
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            transition: 0.2s;
-        }
-        .btn-add:hover { background: var(--blue-corp); }
-
-        .btn-link {
-            background: transparent;
-            color: var(--blue-corp);
-            border: 1px solid var(--blue-corp);
             padding: 10px;
             width: 100%;
             border-radius: 3px;
             cursor: pointer;
             font-weight: bold;
+            text-transform: uppercase;
             font-size: 0.8rem;
+        }
+
+        .btn-link {
+            background: transparent;
+            color: var(--blue-corp);
+            border: 1px solid var(--blue-corp);
+            padding: 8px;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.75rem;
             text-transform: uppercase;
             text-decoration: none;
             text-align: center;
-            transition: 0.2s;
+            margin-top: 8px;
+            display: block;
         }
-        .btn-link:hover { background: #f8fafc; }
 
-        /* --- SIDEBAR RESUMEN --- */
         .sidebar {
             background: var(--white);
             border: 1px solid var(--border);
             border-top: 5px solid var(--orange-corp);
-            padding: 30px;
+            padding: 25px;
             border-radius: 4px;
             height: fit-content;
             position: sticky;
             top: 20px;
         }
 
-        .sidebar h2 { color: var(--blue-dark); font-size: 1.4rem; margin-bottom: 25px; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .sidebar h2 { color: var(--blue-dark); font-size: 1.2rem; margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
 
-        .cart-items-wrapper {
-            max-height: 350px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding-right: 5px;
-        }
+        .cart-items-wrapper { max-height: 300px; overflow-y: auto; margin-bottom: 20px; }
 
-        .cart-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
+        .cart-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
 
-        .btn-del { color: #94a3b8; border: none; background: none; cursor: pointer; font-size: 1.2rem; }
-        .btn-del:hover { color: #ef4444; }
+        .btn-del { color: #94a3b8; border: none; background: none; cursor: pointer; font-size: 1.1rem; }
 
         .input-form {
             width: 100%;
-            padding: 12px 15px;
-            margin-top: 15px;
+            padding: 10px;
+            margin-top: 10px;
             border: 1px solid var(--border);
             border-radius: 4px;
-            font-family: Arial;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .btn-submit {
@@ -253,28 +220,15 @@
             background: var(--orange-corp);
             color: var(--blue-dark);
             border: none;
-            padding: 18px;
-            margin-top: 25px;
+            padding: 15px;
+            margin-top: 20px;
             font-weight: 800;
-            font-size: 1.1rem;
             text-transform: uppercase;
             border-radius: 4px;
             cursor: pointer;
-            transition: background 0.2s;
         }
-        .btn-submit:hover { background: #eeb907; }
 
-        /* --- WA FLOAT --- */
-        .wa-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            z-index: 1000;
-            transition: transform 0.2s;
-        }
-        .wa-float:hover { transform: scale(1.1); }
+        .wa-float { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; z-index: 1000; }
     </style>
 </head>
 <body>
@@ -288,27 +242,21 @@
         <div class="category-card" id="cat-bases">
             <div class="category-header" onclick="toggleCat('bases-content', this)">BASES PMMA <span class="cat-arrow">▼</span></div>
             <div id="bases-content" class="category-content collapsed">
-                <div class="category-inner">
-                    <div class="products-grid" id="grid-bases"></div>
-                </div>
+                <div class="category-inner"><div class="products-grid" id="grid-bases"></div></div>
             </div>
         </div>
 
         <div class="category-card" id="cat-reflex">
             <div class="category-header" onclick="toggleCat('reflex-content', this)">REFLEXIVO <span class="cat-arrow">▼</span></div>
             <div id="reflex-content" class="category-content collapsed">
-                <div class="category-inner">
-                    <div class="products-grid" id="grid-reflex"></div>
-                </div>
+                <div class="category-inner"><div class="products-grid" id="grid-reflex"></div></div>
             </div>
         </div>
 
         <div class="category-card" id="cat-terminadas">
             <div class="category-header" onclick="toggleCat('terminadas-content', this)">PLACAS TERMINADAS <span class="cat-arrow">▼</span></div>
             <div id="terminadas-content" class="category-content collapsed">
-                <div class="category-inner">
-                    <div class="products-grid" id="grid-terminadas"></div>
-                </div>
+                <div class="category-inner"><div class="products-grid" id="grid-terminadas"></div></div>
             </div>
         </div>
 
@@ -326,34 +274,27 @@
     <aside class="sidebar">
         <h2>Resumen</h2>
         <div class="cart-items-wrapper" id="cart-items">
-            <p style="color:#94a3b8; text-align:center; padding:30px; font-style: italic;">No hay artículos seleccionados</p>
+            <p style="color:#94a3b8; text-align:center; padding:20px; font-style: italic;">No hay artículos</p>
         </div>
-        
-        <div style="margin-top:20px;">
-            <label style="font-size: 0.8rem; font-weight: bold; color: var(--blue-dark);">DATOS DE ENVÍO</label>
+        <div>
             <input type="text" id="nombre" class="input-form" placeholder="Empresa / Cliente *">
-            <input type="tel" id="telefono" class="input-form" placeholder="Teléfono de contacto *">
-            <textarea id="notas" class="input-form" rows="3" placeholder="Observaciones o comentarios..."></textarea>
+            <input type="tel" id="telefono" class="input-form" placeholder="Teléfono *">
+            <textarea id="notas" class="input-form" rows="2" placeholder="Observaciones..."></textarea>
         </div>
-        
         <button class="btn-submit" onclick="enviarPedido()">Confirmar Pedido</button>
     </aside>
 </div>
 
 <a href="https://wa.me/34674352726" class="wa-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" style="width:100%">
 </a>
 
 <script>
-    // --- REGISTRO DEL SERVICE WORKER (Para que se instale como App) ---
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js')
-        .then(() => console.log('✅ Service Worker activado'))
-        .catch(err => console.error('Error del Service Worker', err));
+        navigator.serviceWorker.register('./sw.js').then(() => console.log('PWA OK'));
     }
 
     const productos = [
-        // --- BASES PMMA ---
         { id: 1, cat: 'bases', nombre: "Base PMMA Estándar 520x110", pack: 50 },
         { id: 2, cat: 'bases', nombre: "Base PMMA Estándar c/ tira publicitaria 520x110", pack: 50 },
         { id: 3, cat: 'bases', nombre: "Base PMMA Alfa 340x110", pack: 25 },
@@ -365,8 +306,6 @@
         { id: 9, cat: 'bases', nombre: "Base PMMA Cuatriciclo Ligero 210x85", pack: 25 },
         { id: 10, cat: 'bases', nombre: "Base PMMA Vehículo Especial Cuadrada 280x200", pack: 25 },
         { id: 11, cat: 'bases', nombre: "Base PMMA Vehículo Especial 340x110", pack: 25 },
-
-        // --- MATERIAL REFLEXIVO ---
         { id: 12, cat: 'reflex', nombre: "Bobina Reflexivo Estándar 520x110", pack: 50 },
         { id: 13, cat: 'reflex', nombre: "Bobina Reflexivo Cuatriciclo Ligero 520x110", pack: 50 },
         { id: 14, cat: 'reflex', nombre: "Bobina Reflexivo Remolque 520x110", pack: 50 },
@@ -380,61 +319,44 @@
         { id: 22, cat: 'reflex', nombre: "Reflexivo Cuatriciclo Ligero 210x85", pack: 25 },
         { id: 23, cat: 'reflex', nombre: "Reflexivo Vehículo Especial Cuadrada 280x200", pack: 25 },
         { id: 24, cat: 'reflex', nombre: "Reflexivo Vehículo Especial 340x110", pack: 25 },
-
-        // --- PLACAS TERMINADAS ---
-        { id: 25, cat: 'terminadas', nombre: "Matrícula PMMA Taxi/VTC 520x110", pack: 1 },
-        { id: 26, cat: 'terminadas', nombre: "Matrícula PMMA Especial Cuadrada 280x200", pack: 1 },
-        { id: 27, cat: 'terminadas', nombre: "Matrícula PMMA Especial 340x110", pack: 1 },
+        
+        // --- PLACAS TERMINADAS CON IMÁGENES ACTUALIZADAS ---
+        { id: 25, cat: 'terminadas', nombre: "Matrícula PMMA Taxi/VTC 520x110", pack: 1, img: "https://metatrafic.com/27655-large_default/placa-pmma-matricula-acrilica-taxi-vtc-520x110.jpg" },
+        { id: 26, cat: 'terminadas', nombre: "Matrícula PMMA Especial Cuadrada 280x200", pack: 1, img: "https://metatrafic.com/27658-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-280x200.jpg" },
+        { id: 27, cat: 'terminadas', nombre: "Matrícula PMMA Especial 340x110", pack: 1, img: "https://metatrafic.com/27659-large_default/placa-pmma-matricula-acrilica-vehiculo-especial-larga-340x110.jpg" },
         { id: 28, cat: 'terminadas', nombre: "Matrícula PMMA Temporal Empresa 520x110", pack: 1 },
         { id: 29, cat: 'terminadas', nombre: "Matrícula PMMA Temporal Particular 520x110", pack: 1 },
 
-        // --- SEÑALIZACIÓN ---
         { id: 30, cat: 'senalizacion', nombre: "Baliza V16 SOS FLASH", pack: 32, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/Sosflash_3_MDS.webp", link: "https://www.matriculadosdelsur.com/baliza-v16-sosflah/" },
         { id: 31, cat: 'senalizacion', nombre: "Baliza V16 Metaflash", pack: 50, img: "https://www.matriculadosdelsur.com/wp-content/uploads/2026/01/baliza-v16_metaflash.webp", link: "https://www.matriculadosdelsur.com/baliza-v16-metaflash/" }
     ];
 
     let carrito = [];
 
-    function toggleCat(contentId, headerElement) {
-        const content = document.getElementById(contentId);
+    function toggleCat(id, el) {
+        const content = document.getElementById(id);
         content.classList.toggle('collapsed');
-        
-        const arrow = headerElement.querySelector('.cat-arrow');
-        if (content.classList.contains('collapsed')) {
-            arrow.style.transform = 'rotate(0deg)';
-        } else {
-            arrow.style.transform = 'rotate(180deg)';
-        }
+        const arrow = el.querySelector('.cat-arrow');
+        arrow.style.transform = content.classList.contains('collapsed') ? 'rotate(0deg)' : 'rotate(180deg)';
     }
 
     function render() {
         const createCard = (p) => {
             const imgHtml = p.img ? `<img src="${p.img}" class="item-img" alt="${p.nombre}">` : '';
-            const linkHtml = p.link ? `<a href="${p.link}" target="_blank" class="btn-link">Ver ficha técnica</a>` : '';
-            const unitText = p.pack === 1 ? "Venta por unidades" : `Unidad mínima: ${p.pack}`;
-
+            const linkHtml = p.link ? `<a href="${p.link}" target="_blank" class="btn-link">Ver ficha</a>` : '';
             return `
                 <div class="item-card">
-                    <div>
-                        ${imgHtml}
-                        <h3>${p.nombre}</h3>
-                        <p class="item-pack">${unitText}</p>
-                    </div>
+                    <div>${imgHtml}<h3>${p.nombre}</h3><p class="item-pack">${p.pack === 1 ? 'Unidades' : 'Min: ' + p.pack}</p></div>
                     <div>
                         <div class="qty-box">
                             <button class="qty-btn" onclick="altQty(${p.id}, -${p.pack})">-</button>
                             <span class="qty-val" id="q-${p.id}">${p.pack}</span>
                             <button class="qty-btn" onclick="altQty(${p.id}, ${p.pack})">+</button>
                         </div>
-                        <div class="action-btns">
-                            <button class="btn-add" onclick="add(${p.id})">Añadir al carrito</button>
-                            ${linkHtml}
-                        </div>
+                        <button class="btn-add" onclick="add(${p.id})">Añadir</button>${linkHtml}
                     </div>
-                </div>
-            `;
+                </div>`;
         };
-
         document.getElementById('grid-bases').innerHTML = productos.filter(x => x.cat === 'bases').map(createCard).join('');
         document.getElementById('grid-reflex').innerHTML = productos.filter(x => x.cat === 'reflex').map(createCard).join('');
         document.getElementById('grid-terminadas').innerHTML = productos.filter(x => x.cat === 'terminadas').map(createCard).join('');
@@ -443,10 +365,9 @@
 
     function altQty(id, delta) {
         const el = document.getElementById(`q-${id}`);
-        const pack = productos.find(x => x.id === id).pack;
+        const p = productos.find(x => x.id === id);
         let val = parseInt(el.innerText) + delta;
-        if (val < pack) val = pack;
-        el.innerText = val;
+        el.innerText = val < p.pack ? p.pack : val;
     }
 
     function add(id) {
@@ -457,40 +378,24 @@
         renderCart();
     }
 
-    function del(id) {
-        carrito = carrito.filter(x => x.id !== id);
-        renderCart();
-    }
-
     function renderCart() {
         const container = document.getElementById('cart-items');
-        if (!carrito.length) {
-            container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:30px; font-style: italic;">No hay artículos seleccionados</p>';
-            return;
-        }
-        container.innerHTML = carrito.map(i => `
+        if (!carrito.length) { container.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:20px;">Sin productos</p>'; return; }
+        container.innerHTML = carrito.map((i, idx) => `
             <div class="cart-row">
-                <span><strong>${i.qty}</strong> x ${i.nombre}</span>
-                <button class="btn-del" onclick="del(${i.id})">✕</button>
-            </div>
-        `).join('');
+                <span><strong>${i.qty}</strong> x ${i.nombre.substring(0,25)}...</span>
+                <button class="btn-del" onclick="carrito.splice(${idx},1);renderCart();">✕</button>
+            </div>`).join('');
     }
 
     function enviarPedido() {
         const nom = document.getElementById('nombre').value;
         const tel = document.getElementById('telefono').value;
-        if (!carrito.length || !nom || !tel) return alert("Por favor, rellene los campos obligatorios (*) y añada productos.");
-
-        let body = `NUEVO PEDIDO - GRUPO MDS\n--------------------------\n`;
-        body += `CLIENTE: ${nom}\nTELÉFONO: ${tel}\nNOTAS: ${document.getElementById('notas').value}\n\n`;
-        body += `DETALLE:\n`;
-        carrito.forEach(i => body += `- ${i.qty} unidades de ${i.nombre}\n`);
-
-        const subject = `Nuevo pedido: ${nom}`;
-        const mailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=pedidos@matriculadosdelsur.es&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.open(mailLink, '_blank');
+        if (!carrito.length || !nom || !tel) return alert("Completa los campos *");
+        let body = `PEDIDO GRUPO MDS\nCliente: ${nom}\nTel: ${tel}\n\n`;
+        carrito.forEach(i => body += `- ${i.qty} uds. ${i.nombre}\n`);
+        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=pedidos@matriculadosdelsur.es&su=Pedido ${nom}&body=${encodeURIComponent(body)}`, '_blank');
     }
-
     render();
 </script>
 </body>
