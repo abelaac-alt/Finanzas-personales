@@ -28,7 +28,6 @@
         header { text-align: center; }
         header h1 { font-size: 2rem; font-weight: 700; color: var(--text-main); }
 
-        /* Grid de 4 columnas para las cuentas obligatorias */
         .summary-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
@@ -47,8 +46,8 @@
         .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         @media (max-width: 768px) { .main-content { grid-template-columns: 1fr; } }
         
-        .section-card { background: var(--card-bg); padding: 1.5rem; border-radius: 1rem; box-shadow: var(--shadow); }
-        .section-card h2 { font-size: 1.25rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+        .section-card { background: var(--card-bg); padding: 1.5rem; border-radius: 1rem; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+        .section-card h2 { font-size: 1.25rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
 
         .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; }
@@ -57,11 +56,13 @@
         
         button { width: 100%; padding: 0.875rem; background-color: var(--primary); color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: var(--transition); }
         button:hover { background-color: var(--primary-hover); }
+        
+        .btn-excel { background-color: var(--success); margin-bottom: 1rem; }
+        .btn-excel:hover { background-color: #059669; }
 
-        .transaction-list { list-style: none; max-height: 400px; overflow-y: auto; padding-right: 0.25rem; }
+        .transaction-list { list-style: none; max-height: 400px; overflow-y: auto; padding-right: 0.25rem; flex-grow: 1; }
         .transaction-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #f9fafb; border-radius: 0.5rem; margin-bottom: 0.75rem; border-left: 4px solid transparent; }
         
-        /* Colores de borde según la cuenta */
         .transaction-item.ingreso { border-left-color: var(--success); }
         .transaction-item.inversion { border-left-color: var(--investment); }
         .transaction-item.gasto { border-left-color: var(--danger); }
@@ -69,7 +70,9 @@
         .transaction-desc { font-weight: 600; }
         .transaction-cat { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.25rem; text-transform: capitalize; }
         
-        .delete-btn { background: none; color: var(--text-muted); padding: 0 0.5rem; width: auto; font-size: 1.2rem; margin-top: 0; }
+        .action-btns { display: flex; align-items: center; gap: 0.25rem; }
+        .icon-btn { background: none; color: var(--text-muted); padding: 0 0.5rem; width: auto; font-size: 1.2rem; margin-top: 0; }
+        .edit-btn:hover { color: var(--primary); background: none; }
         .delete-btn:hover { color: var(--danger); background: none; }
         .empty-state { text-align: center; color: var(--text-muted); padding: 2rem 0; font-style: italic; }
     </style>
@@ -105,6 +108,11 @@
                 <h2>Asignar a Cuenta</h2>
                 <form id="finance-form">
                     <div class="form-group">
+                        <label for="date">Fecha</label>
+                        <input type="date" id="date" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="account-type">Cuenta</label>
                         <select id="account-type">
                             <option value="ingreso">Ingreso</option>
@@ -129,12 +137,16 @@
                         <input type="number" id="amount" placeholder="0.00" step="0.01" min="0.01" required>
                     </div>
 
-                    <button type="submit">Registrar en Cuenta</button>
+                    <button type="submit" id="submit-btn">Registrar en Cuenta</button>
+                    <button type="button" id="cancel-edit-btn" style="display: none; background-color: var(--text-muted);">Cancelar Edición</button>
                 </form>
             </div>
 
             <div class="section-card">
-                <h2>Historial de Movimientos</h2>
+                <h2>
+                    Historial
+                    <button type="button" id="export-excel" class="icon-btn" style="color: var(--success); font-size: 1rem;" title="Descargar en Excel">📥 Excel</button>
+                </h2>
                 <ul class="transaction-list" id="transaction-list"></ul>
             </div>
         </div>
@@ -148,10 +160,14 @@
         
         const listElement = document.getElementById('transaction-list');
         const formElement = document.getElementById('finance-form');
+        const dateInput = document.getElementById('date');
         const accountTypeSelect = document.getElementById('account-type');
         const categorySelect = document.getElementById('category');
         const descriptionInput = document.getElementById('description');
         const amountInput = document.getElementById('amount');
+        const submitBtn = document.getElementById('submit-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        const exportExcelBtn = document.getElementById('export-excel');
 
         // Organización estricta de categorías dentro de cada cuenta
         const accountMapping = {
@@ -161,21 +177,22 @@
         };
 
         let dataRecords = JSON.parse(localStorage.getItem('finance_records')) || [];
+        let editModeId = null; // Variable para saber si estamos editando
 
         function init() {
             updateCategories();
-            listElement.innerHTML = '';
-            
-            if(dataRecords.length === 0) {
-                listElement.innerHTML = '<div class="empty-state">Sin movimientos en el mes actual.</div>';
-            } else {
-                dataRecords.forEach(renderRecord);
-            }
+            setDefaultDate();
+            renderAllRecords();
             calculateAccounts();
         }
 
+        function setDefaultDate() {
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.value = today;
+        }
+
         // Cambia dinámicamente las categorías según la cuenta elegida
-        function updateCategories() {
+        function updateCategories(selectedCategory = null) {
             const currentAccount = accountTypeSelect.value;
             categorySelect.innerHTML = '';
             
@@ -185,94 +202,26 @@
                 option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
                 categorySelect.appendChild(option);
             });
+
+            if (selectedCategory) {
+                categorySelect.value = selectedCategory;
+            }
         }
 
         function formatCurrency(value) {
             return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value);
         }
 
-        function renderRecord(record) {
-            const li = document.createElement('li');
-            li.classList.add('transaction-item', record.account);
-
-            // Determinar prefijo visual según la cuenta
-            let prefix = '-';
-            let textClass = 'text-danger';
-            if (record.account === 'ingreso') {
-                prefix = '+';
-                textClass = 'text-success';
-            } else if (record.account === 'inversion') {
-                prefix = '-';
-                textClass = 'text-investment';
-            }
-
-            li.innerHTML = `
-                <div>
-                    <span class="text-main transaction-desc">${record.description}</span>
-                    <span class="transaction-cat">Cuenta: ${record.account} | Cat: ${record.category}</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <strong class="${textClass}">
-                        ${prefix}${formatCurrency(record.amount)}
-                    </strong>
-                    <button class="delete-btn" onclick="deleteRecord(${record.id})">×</button>
-                </div>
-            `;
-            listElement.appendChild(li);
-        }
-
-        // Realiza los cálculos de cada cuenta y deriva el remanente a Ahorro
-        function calculateAccounts() {
-            const totalIncome = dataRecords.filter(r => r.account === 'ingreso').reduce((acc, r) => acc + r.amount, 0);
-            const totalInvestment = dataRecords.filter(r => r.account === 'inversion').reduce((acc, r) => acc + r.amount, 0);
-            const totalExpense = dataRecords.filter(r => r.account === 'gasto').reduce((acc, r) => acc + r.amount, 0);
+        function renderAllRecords() {
+            listElement.innerHTML = '';
             
-            // Fórmula de Ahorro: Lo que sobra al mes
-            const totalSavings = totalIncome - totalInvestment - totalExpense;
-
-            accountIncome.innerText = formatCurrency(totalIncome);
-            accountInvestment.innerText = formatCurrency(totalInvestment);
-            accountExpense.innerText = formatCurrency(totalExpense);
-            accountSavings.innerText = formatCurrency(totalSavings);
-            
-            // Cambiar dinámicamente el color del ahorro si se entra en números negativos
-            if (totalSavings < 0) {
-                accountSavings.className = "amount text-danger";
+            if(dataRecords.length === 0) {
+                listElement.innerHTML = '<div class="empty-state">Sin movimientos registrados.</div>';
             } else {
-                accountSavings.className = "amount text-savings";
+                // Ordenar por fecha (los más recientes primero)
+                const sortedRecords = [...dataRecords].sort((a, b) => new Date(b.date) - new Date(a.date));
+                sortedRecords.forEach(renderRecord);
             }
         }
 
-        function deleteRecord(id) {
-            dataRecords = dataRecords.filter(r => r.id !== id);
-            localStorage.setItem('finance_records', JSON.stringify(dataRecords));
-            init();
-        }
-
-        // Listeners activos
-        accountTypeSelect.addEventListener('change', updateCategories);
-
-        formElement.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const record = {
-                id: Date.now() + Math.floor(Math.random() * 1000),
-                account: accountTypeSelect.value,
-                category: categorySelect.value,
-                description: descriptionInput.value,
-                amount: parseFloat(amountInput.value)
-            };
-
-            dataRecords.push(record);
-            localStorage.setItem('finance_records', JSON.stringify(dataRecords));
-
-            descriptionInput.value = '';
-            amountInput.value = '';
-            init();
-        });
-
-        // Ejecución inicial al cargar
-        init();
-    </script>
-</body>
-</html>
+        function
