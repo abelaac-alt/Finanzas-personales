@@ -159,25 +159,46 @@
         const formElement = document.getElementById('finance-form');
         const dateInput = document.getElementById('date');
         const accountTypeSelect = document.getElementById('account-type');
-        
-        // Elementos actualizados para las categorías
         const categoryInput = document.getElementById('category');
         const categoryList = document.getElementById('category-list');
-        
         const descriptionInput = document.getElementById('description');
         const amountInput = document.getElementById('amount');
         const submitBtn = document.getElementById('submit-btn');
         const cancelEditBtn = document.getElementById('cancel-edit-btn');
         const exportExcelBtn = document.getElementById('export-excel');
 
-        // Sugerencias de categorías ampliadas (ahora puedes añadir más o simplemente escribirlas al registrar)
         const accountMapping = {
             ingreso: ['Sueldo', 'Efectivo', 'Bizum', 'Transferencia'],
             inversion: ['Bolsa', 'Fondo de Inversión', 'Criptomonedas', 'Ahorro a plazo'],
             gasto: ['Comida', 'Transporte', 'Hogar', 'Salud', 'Ocio', 'Educación', 'Otros']
         };
 
-        let dataRecords = JSON.parse(localStorage.getItem('finance_records')) || [];
+        // --- EXTRACCIÓN Y PARCHE DE DATOS ---
+        let dataRecords = [];
+        try {
+            dataRecords = JSON.parse(localStorage.getItem('finance_records')) || [];
+        } catch (e) {
+            dataRecords = [];
+        }
+
+        // Parche automático: Si tienes datos viejos sin fecha de la app original, les pone la fecha de hoy para que no crashee.
+        let needsSave = false;
+        dataRecords = dataRecords.map(record => {
+            if (!record.date) {
+                record.date = new Date().toISOString().split('T')[0];
+                needsSave = true;
+            }
+            if (!record.category) {
+                record.category = 'General';
+                needsSave = true;
+            }
+            return record;
+        });
+
+        if (needsSave) {
+            localStorage.setItem('finance_records', JSON.stringify(dataRecords));
+        }
+
         let editModeId = null;
 
         function init() {
@@ -192,7 +213,6 @@
             dateInput.value = today;
         }
 
-        // Carga las sugerencias en el datalist
         function updateCategories() {
             const currentAccount = accountTypeSelect.value;
             categoryList.innerHTML = '';
@@ -203,7 +223,6 @@
                 categoryList.appendChild(option);
             });
 
-            // Solo limpiamos el input si no estamos en medio de una edición
             if (!editModeId) {
                 categoryInput.value = '';
             }
@@ -238,8 +257,13 @@
                 textClass = 'text-investment';
             }
 
-            const dateObj = new Date(record.date);
-            const formattedDate = dateObj.toLocaleDateString('es-ES');
+            // Evitar errores de fecha si el valor está corrupto
+            let formattedDate = 'Fecha inválida';
+            try {
+                formattedDate = new Date(record.date).toLocaleDateString('es-ES');
+            } catch (e) {
+                console.error("Error al formatear fecha:", record.date);
+            }
 
             li.innerHTML = `
                 <div>
@@ -298,7 +322,6 @@
             dateInput.value = record.date;
             accountTypeSelect.value = record.account;
             
-            // Actualizamos la lista de sugerencias y luego asignamos el valor que tenía guardado
             updateCategories();
             categoryInput.value = record.category; 
             
@@ -308,7 +331,6 @@
             submitBtn.textContent = 'Actualizar Registro';
             cancelEditBtn.style.display = 'block';
             
-            // Hacemos scroll suave hacia arriba para que el usuario vea el formulario
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -332,11 +354,15 @@
             csvContent += "Fecha;Cuenta;Categoria;Descripcion;Importe\n";
 
             dataRecords.forEach(record => {
-                const dateObj = new Date(record.date).toLocaleDateString('es-ES');
+                let dateObjStr = record.date;
+                try {
+                    dateObjStr = new Date(record.date).toLocaleDateString('es-ES');
+                } catch(e) {}
+                
                 const safeDescription = record.description.replace(/;/g, ",");
                 const safeAmount = record.amount.toString().replace('.', ',');
                 
-                const row = `${dateObj};${record.account};${record.category};${safeDescription};${safeAmount}`;
+                const row = `${dateObjStr};${record.account};${record.category};${safeDescription};${safeAmount}`;
                 csvContent += row + "\n";
             });
 
@@ -364,7 +390,7 @@
                             ...r,
                             date: dateInput.value,
                             account: accountTypeSelect.value,
-                            category: categoryInput.value.trim(), // Capturamos lo que el usuario haya escrito
+                            category: categoryInput.value.trim(),
                             description: descriptionInput.value,
                             amount: parseFloat(amountInput.value)
                         };
@@ -376,7 +402,7 @@
                     id: Date.now() + Math.floor(Math.random() * 1000),
                     date: dateInput.value,
                     account: accountTypeSelect.value,
-                    category: categoryInput.value.trim(), // Capturamos lo que el usuario haya escrito
+                    category: categoryInput.value.trim(),
                     description: descriptionInput.value,
                     amount: parseFloat(amountInput.value)
                 };
