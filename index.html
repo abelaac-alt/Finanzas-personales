@@ -59,7 +59,12 @@
             text-transform: uppercase;
         }
 
-        .btn-export {
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-icon {
             background: none;
             border: none;
             cursor: pointer;
@@ -71,9 +76,7 @@
             transition: background-color 0.2s;
         }
 
-        .btn-export:active {
-            background-color: var(--gray-light);
-        }
+        .btn-icon:active { background-color: var(--gray-light); }
 
         .view-container {
             flex-grow: 1;
@@ -112,6 +115,7 @@
             font-size: 32px; 
             font-weight: 700; 
             letter-spacing: -1px;
+            transition: opacity 0.2s;
         }
 
         /* Formularios */
@@ -236,15 +240,24 @@
     <div class="app-container">
         <header class="app-header">
             <h1>Finanzas</h1>
-            <button class="btn-export" id="btn-export" title="Exportar a Excel">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                </svg>
-            </button>
+            <div class="header-actions">
+                <button class="btn-icon" id="btn-incognito" title="Modo Incógnito">
+                    <svg id="icon-eye" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                    <svg id="icon-eye-off" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display: none;">
+                        <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+                    </svg>
+                </button>
+                <button class="btn-icon" id="btn-export" title="Exportar a Excel">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    </svg>
+                </button>
+            </div>
         </header>
 
         <div class="view-container">
-            
             <div class="view active" id="view-dashboard">
                 <div class="summary-card dark">
                     <h3>Ahorro Disponible</h3>
@@ -294,7 +307,6 @@
                     <button type="submit" id="submit-btn" class="btn-submit">Publicar Registro</button>
                 </form>
             </div>
-
         </div>
 
         <nav class="bottom-nav">
@@ -316,10 +328,10 @@
 
     <script>
         // ----------------------------------------
-        // SISTEMA DE ALMACENAMIENTO (LOCALSTORAGE)
+        // SISTEMA DE ALMACENAMIENTO Y ESTADO
         // ----------------------------------------
-        // Cargamos los datos guardados, o inicializamos un array vacío si es la primera vez
         let transactions = JSON.parse(localStorage.getItem('finanzas_data')) || [];
+        let isIncognito = JSON.parse(localStorage.getItem('finanzas_incognito')) || false;
         let currentEditId = null;
 
         const form = document.getElementById('transaction-form');
@@ -330,10 +342,19 @@
         const formatter = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
         dateInput.value = new Date().toISOString().split('T')[0];
 
-        // Función centralizada para guardar en el dispositivo
         function saveData() {
             localStorage.setItem('finanzas_data', JSON.stringify(transactions));
+            localStorage.setItem('finanzas_incognito', JSON.stringify(isIncognito));
         }
+
+        // ----------------------------------------
+        // MODO INCÓGNITO
+        // ----------------------------------------
+        document.getElementById('btn-incognito').addEventListener('click', function() {
+            isIncognito = !isIncognito;
+            saveData();
+            updateUI();
+        });
 
         // ----------------------------------------
         // NAVEGACIÓN
@@ -403,7 +424,7 @@
         });
 
         // ----------------------------------------
-        // LÓGICA FINANCIERA
+        // LÓGICA FINANCIERA E INTERFAZ
         // ----------------------------------------
         function resetForm() {
             form.reset();
@@ -419,7 +440,17 @@
         }
 
         function updateUI() {
+            // Actualizar iconos de incógnito
+            if (isIncognito) {
+                document.getElementById('icon-eye').style.display = 'none';
+                document.getElementById('icon-eye-off').style.display = 'block';
+            } else {
+                document.getElementById('icon-eye').style.display = 'block';
+                document.getElementById('icon-eye-off').style.display = 'none';
+            }
+
             list.innerHTML = '';
+            const maskText = '***,** €';
 
             const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -435,6 +466,9 @@
                     const amountClass = isPositive ? 'amount-ingreso' : 'amount-gasto';
                     const displayDate = formatDateToDisplay(t.date);
                     
+                    // Renderizado del dinero o máscara de incógnito
+                    const displayAmount = isIncognito ? `${sign} ${maskText}` : `${sign}${formatter.format(t.amount)}`;
+                    
                     li.innerHTML = `
                         <div class="transaction-info">
                             <span class="transaction-desc">${t.desc}</span>
@@ -445,7 +479,7 @@
                             </div>
                         </div>
                         <div class="transaction-right">
-                            <div class="transaction-amount ${amountClass}">${sign}${formatter.format(t.amount)}</div>
+                            <div class="transaction-amount ${amountClass}">${displayAmount}</div>
                             <div class="action-buttons">
                                 <button class="btn-action btn-edit" onclick="editTransaction(${t.id})">Editar</button>
                                 <button class="btn-action btn-delete" onclick="deleteTransaction(${t.id})">Borrar</button>
@@ -461,10 +495,11 @@
             const investment = transactions.filter(t => t.type === 'inversion').reduce((acc, t) => acc + t.amount, 0);
             const savings = income - expense - investment;
 
-            document.getElementById('account-income').innerText = formatter.format(income);
-            document.getElementById('account-expense').innerText = formatter.format(expense);
-            document.getElementById('account-investment').innerText = formatter.format(investment);
-            document.getElementById('account-savings').innerText = formatter.format(savings);
+            // Renderizado de totales o máscaras
+            document.getElementById('account-income').innerText = isIncognito ? maskText : formatter.format(income);
+            document.getElementById('account-expense').innerText = isIncognito ? maskText : formatter.format(expense);
+            document.getElementById('account-investment').innerText = isIncognito ? maskText : formatter.format(investment);
+            document.getElementById('account-savings').innerText = isIncognito ? maskText : formatter.format(savings);
         }
 
         form.addEventListener('submit', function(e) {
@@ -485,7 +520,7 @@
                 transactions.unshift(transaction); 
             }
             
-            saveData(); // Guardar cambios en el navegador
+            saveData();
             updateUI();
             resetForm();
             switchTab('activity');
@@ -507,11 +542,11 @@
 
         window.deleteTransaction = function(id) {
             transactions = transactions.filter(t => t.id !== id);
-            saveData(); // Guardar cambios al borrar
+            saveData();
             updateUI();
         };
 
-        // Inicio: Reflejar la interfaz con los datos guardados
+        // Inicio
         updateUI();
     </script>
 </body>
