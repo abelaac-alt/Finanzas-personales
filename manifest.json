@@ -2,8 +2,8 @@
   "name": "Finanzas",
   "short_name": "Finanzas",
   "description": "Aplicación personal de finanzas",
-  "start_url": "/Finanzas-pe/",
-  "scope": "/Finanzas-pe/",
+  "start_url": "/Finanzas-personales/",
+  "scope": "/Finanzas-personales/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f5f4f0",
@@ -11,13 +11,13 @@
   "lang": "es",
   "icons": [
     {
-      "src": "/Finanzas-pe/icon-192.png",
+      "src": "/Finanzas-personales/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/Finanzas-pe/icon-512.png",
+      "src": "/Finanzas-personales/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
