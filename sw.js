@@ -1,11 +1,11 @@
-const CACHE_NAME = "finanzas-personales";
+const CACHE_NAME = "finanzas-cache-v2";
 
 const ASSETS = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png"
+  "/Finanzas-pe/",
+  "/Finanzas-pe/index.html",
+  "/Finanzas-pe/manifest.json",
+  "/Finanzas-pe/icon-192.png",
+  "/Finanzas-pe/icon-512.png"
 ];
 
 self.addEventListener("install", event => {
